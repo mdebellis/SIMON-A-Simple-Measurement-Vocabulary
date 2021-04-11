@@ -1,2 +1,6 @@
 # SIMON: A Simple Measurement Ontology
-A Web Ontology Language (OWL) ontology designed to represent 1, 2, and n dimensional measurements.
+SIMON: SImple Measurement ONtology is designed to represent measurements of one, two or n dimensions. E.g., distance: meters, weight: kilograms, time: seconds; speed: miles per hour, wages: dollars per hour; acceleration: meters per second per second. Although there are other vocabularies that exist in this domain they are large and complex. That is of course completely appropriate for certain types of problems but for many problems I've encountered recently with clients a smaller, leaner, easier vocabulary is useful, that is the niche that SIMON attempts to fill. 
+
+Two main classes: measurement which records a specific measurement such as distance, speed, or acceleration and units which record units such as meters, miles per hour, and meters per second per second. Each measurement also has a data property with range xsd:dateTime to record when the measurement was taken if desired. 
+
+There are SWRL rules defined to trasnlate from various measurements such as miles to kilometers or miles per hour to kilomerters per hour. The ordering on measurements is defined by various transitive object properties such as greaterThan with inverses such as lessThan.
