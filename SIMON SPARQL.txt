@@ -1,0 +1,52 @@
+#Queries for SIMON: SImple Measurement Ontology
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mm: <http://www.semanticweb.org/michaeldebellis/ontologies/2021/0/measurement#>
+
+#Displays all the instances of the Measurement class
+SELECT ?mlbl
+WHERE {?m a mm:Measurement;
+		rdfs:label ?mlbl.}
+
+#Creates formatted string names for SingleUnitMeasurement instances
+#Note: this and the following two transforms require that the SWRL 
+#rules have been run in Protege and the results saving using Export
+#Inferred Axioms as Ontology  				
+INSERT {?m rdfs:label ?mname.}
+WHERE {?m a mm:SingleUnitMeasurement;
+          mm:hasUnit1 ?u1;
+		  mm:hasMeasuredValue ?mv.
+		?u1 mm:pluralName ?pn.
+		BIND (CONCAT(xsd:string(?mv)," ",?pn) AS ?mname). }
+
+#Creates formatted string names for DoubleUnitMeasurement instances			
+INSERT {?m rdfs:label ?mname.}
+WHERE {?m a mm:DoubleUnitMeasurement;
+          mm:hasUnit1 ?u1;
+		  mm:hasUnit2 ?u2;
+		  mm:hasMeasurement1 ?m1;
+		  mm:hasMeasurement1 ?m1.
+		?u1 mm:pluralName ?pn.
+		?u2 rdfs:label ?u2lbl.
+		?m1 mm:hasMeasuredValue ?mv.
+		BIND (CONCAT(xsd:string(?mv)," ",?pn," per ",?u2lbl) AS ?mname).}
+		
+#Creates formatted string names for TripleUnitMeasurement instances
+INSERT {?m rdfs:label ?mname.}
+WHERE {?m a mm:TripleUnitMeasurement;
+          mm:hasUnit1 ?u1;
+		  mm:hasUnit2 ?u2;
+		  mm:hasUnit3 ?u3;
+		  mm:hasMeasurement2 ?m2.
+		?u1 mm:pluralName ?pn.
+		?u2 rdfs:label ?u2lbl.
+		?m2 mm:hasMeasurement1 ?m1.
+		?u3 rdfs:label ?u3lbl.
+		?m1 mm:hasMeasuredValue ?mv.
+		BIND (CONCAT(xsd:string(?mv)," ",?pn," per ",?u2lbl," per ",?u3lbl) AS ?mname).}
+
+			
+
+
+		
